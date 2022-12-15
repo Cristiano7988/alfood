@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import http from "../../../http";
 import IRestaurante from "../../../interfaces/IRestaurante";
 
 const FormularioRestaurante = () => {
@@ -9,7 +9,7 @@ const FormularioRestaurante = () => {
 
     useEffect(() => {
         if (parametros.id) {
-            axios.get<IRestaurante>(`http://localhost:8000/api/v2/restaurantes/${parametros.id}/`)
+            http.get<IRestaurante>(`restaurantes/${parametros.id}/`)
             .then((resposta) => {
                 setNomeRestaurante(resposta.data.nome);
             })
@@ -22,7 +22,7 @@ const FormularioRestaurante = () => {
         evento.preventDefault();
 
         if (parametros.id) {
-            axios.put(`http://localhost:8000/api/v2/restaurantes/${parametros.id}/`, {
+            http.put(`restaurantes/${parametros.id}/`, {
                 nome: nomeRestaurante
             })
             .then(() => {
@@ -32,7 +32,7 @@ const FormularioRestaurante = () => {
                 console.log(erro)
             })
         } else {
-            axios.post("http://localhost:8000/api/v2/restaurantes/", {
+            http.post("restaurantes/", {
                 nome: nomeRestaurante
             })
             .then(() => {
